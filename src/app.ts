@@ -1,5 +1,6 @@
 import express from "express"
 import expressReqId from "express-request-id"
+import morgan_middleware from "./middlewares/morgan.middleware"
 import { userRouter } from "./routes/user.router"
 
 class App {
@@ -20,6 +21,9 @@ class App {
       res.status(200).send("Hello World!")
     })
     this.express.use(addRequestId)
+    this.express.use(morgan_middleware)
+    this.express.use(express.json())
+    this.express.use(express.urlencoded({extended:false}))
     this.express.use("/api/users", userRouter)
   }
 }
